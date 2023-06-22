@@ -1,0 +1,17 @@
+version: '2'
+services: 
+  app:
+    build:
+      context: .
+      target: dev
+    ports:
+      - '3000:3000'
+    volumes:
+      - '.:/app'
+    links:
+      - db
+    environment:
+      - REDIS_HOST=db
+      - REDIS_PORT=6379
+  db:
+    image: 'redis'

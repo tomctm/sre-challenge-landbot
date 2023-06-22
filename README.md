@@ -1,34 +1,48 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# SRE DevOps Challenge
+The goal of this technical exercise is to transform the attached docker compose file into a
+K8S infrastructure. The project is a simple NextJS app that tracks user visits in a RedisDB. 
+Our developers have created the following docker-compose.yml file:
 
-## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+```yaml
+version: '2'
+services: 
+  app:
+    build:
+      context: .
+      target: dev
+    ports:
+      - '3000:3000'
+    volumes:
+      - '.:/app'
+    links:
+      - db
+    environment:
+      - REDIS_HOST=db
+      - REDIS_PORT=6379
+  db:
+    image: 'redis'
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The have been very keen to provide a multistage dockerfile with `runner` target that generates our prod build.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+This app uses needs the following env vars to configure redis connection:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- REDIS_HOST: Host of the redis instance
+- REDIS_PORT: Port of the redis instance
+- REDIS_USERNAME: Redis instance username
+- REDIS_PASSWORD: Redis instance password
 
-## Learn More
+## Exercise 1 - Pipelines
 
-To learn more about Next.js, take a look at the following resources:
+We need to generate the pipelines that build and publish the project image. Please provide scripts, github action or gitlab pipelines that build the image and publish it to the registry (feel free to use any public docker image registry of your choice).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Exercise 2 - Kubernetes
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+We want to deploy this project to our K8S cluster. Please provide scripts, kubernetes manifest or helm charts that create the needed infrastructure. We use GKE but in this case feel free to use any locally hosted cluster (minikube, kind, etc..).
+Write it as this was a real world production project, so keep into account things like High Avaliability, Autoscalling, Security, etc...
 
-## Deploy on Vercel
+## Exercise 3 - Docs
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Last but not least, please write a meaninful documentation of your design choices and how a developer can deploy the project.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
