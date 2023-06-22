@@ -13,7 +13,8 @@ services:
     ports:
       - '3000:3000'
     volumes:
-      - '.:/app'
+      - './app:/app/app'
+      - './public:/app/public'
     links:
       - db
     environment:
