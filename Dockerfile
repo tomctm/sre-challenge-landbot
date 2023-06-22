@@ -1,21 +1,20 @@
 FROM node:18-alpine AS base
 
-# Install dependencies only when needed
-FROM base AS deps
+# Build Project
+FROM base AS builder
 RUN apk add --no-cache libc6-compat
-WORKDIR /app
 
-# Install dependencies based on the preferred package manager
-COPY yarn.lock* ./
-RUN \
-    if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
-    else echo "Lockfile not found." && exit 1; \
-    fi
+WORKDIR /app
+COPY . .
+
+ENV NEXT_TELEMETRY_DISABLED 1
+
+RUN yarn --frozen-lockfile
+RUN yarn build
 
 # Run dev server
-FROM base AS dev
+FROM deps AS dev
 WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 ENV NEXT_TELEMETRY_DISABLED 1
@@ -27,18 +26,8 @@ ENV PORT 3000
 CMD ["yarn", "dev"]
 
 
-# Rebuild the source code only when needed
-FROM base AS builder
-WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
-COPY . .
-
-ENV NEXT_TELEMETRY_DISABLED 1
-
-RUN yarn build
-
 # Production image, copy all the files and run next
-FROM base AS runner
+FROM builder AS runner
 WORKDIR /app
 
 ENV NODE_ENV production
