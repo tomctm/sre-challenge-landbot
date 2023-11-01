@@ -25,5 +25,5 @@ jobs:
       # Replace your-dockerhub-username with your Docker Hub username
 
     - name: Push Docker image to Docker Hub
-      run: docker push landbot-test/my-nodejs-app:latest
+      run: docker push landbot-test/landbot-test:latest
 
