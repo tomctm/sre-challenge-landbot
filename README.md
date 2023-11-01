@@ -166,7 +166,15 @@ kubectl run -i --tty load-generator --rm --image=busybox:1.28 --restart=Never --
 In this way, as shown in the image, we see that the autoscaler automatically starts to wash instances to cover all the requests:
 
 
-![Screenshot 2023-11-01 at 18 08 42](https://github.com/tomctm/sre-challenge-landbot/assets/8587416/8bf4ad55-ec49-4b0c-91df-e3d46d1271a7)
+![Screenshot 2023-11-01 at 17 55 53](https://github.com/tomctm/sre-challenge-landbot/assets/8587416/d6e71648-b981-48af-9669-929c535c8312)
+
+
+
+Once the load of requests goes down, autoscaling will automatically lower the number of pods again:
+
+
+![Screenshot 2023-11-01 at 18 08 42](https://github.com/tomctm/sre-challenge-landbot/assets/8587416/5fa3a8aa-717e-43dc-ba0c-f4d89f0bf296)
+
 
 
 
