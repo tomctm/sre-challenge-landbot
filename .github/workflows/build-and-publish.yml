@@ -1,0 +1,29 @@
+name: Build and Publish Docker Image
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Login to Docker Hub
+      run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+      # Configure your Docker Hub username and password as GitHub secrets
+
+    - name: Build Docker image
+      run: docker build -t landbot-test:latest .
+
+    - name: Publish Docker image
+      run: docker tag my-nodejs-app:latest tomctm/landbot-test:latest
+      # Replace your-dockerhub-username with your Docker Hub username
+
+    - name: Push Docker image to Docker Hub
+      run: docker push landbot-test/my-nodejs-app:latest
+
