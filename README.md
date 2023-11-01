@@ -19,7 +19,10 @@ Before you begin, ensure that you have the following prerequisites:
 
 This is an example about the execution of this pipeline: https://github.com/tomctm/sre-challenge-landbot/actions/runs/6718431542
 
-[IMAGE DOCKER HUB]
+
+![Screenshot 2023-11-01 at 20 17 28](https://github.com/tomctm/sre-challenge-landbot/assets/8587416/1ae9071c-6370-43a4-a574-c039549fe36c)
+
+
 
 
 ## Exercise 2: Kubernetes, deploy the app in a kubernetes cluster.
@@ -148,7 +151,8 @@ We will create the autoscaler by setting a consumption of 60% so that it can lif
 
 Once the application is deployed. We can access it through the public IP that the balancer offers us:
 
-[IMAGEN WEB]
+
+![Screenshot 2023-11-01 at 19 30 19](https://github.com/tomctm/sre-challenge-landbot/assets/8587416/e0f70625-ba65-4aa0-9405-1c4dbf159411)
 
 
 In order to test the autoscaling, we set up a pod that launches http requests against the application:
@@ -161,7 +165,9 @@ kubectl run -i --tty load-generator --rm --image=busybox:1.28 --restart=Never --
 
 In this way, as shown in the image, we see that the autoscaler automatically starts to wash instances to cover all the requests:
 
-[IMAGEN CONSOLA]
+
+![Screenshot 2023-11-01 at 18 08 42](https://github.com/tomctm/sre-challenge-landbot/assets/8587416/8bf4ad55-ec49-4b0c-91df-e3d46d1271a7)
+
 
 
 
