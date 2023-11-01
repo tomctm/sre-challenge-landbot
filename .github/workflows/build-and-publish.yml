@@ -21,9 +21,9 @@ jobs:
       run: docker build -t landbot-test:latest .
 
     - name: Publish Docker image
-      run: docker tag my-nodejs-app:latest tomctm/landbot-test:latest
+      run: docker tag landbot-test:latest tomctm/landbot-test:latest
       # Replace your-dockerhub-username with your Docker Hub username
 
     - name: Push Docker image to Docker Hub
-      run: docker push landbot-test/landbot-test:latest
+      run: docker push tomctm/landbot-test:latest
 
